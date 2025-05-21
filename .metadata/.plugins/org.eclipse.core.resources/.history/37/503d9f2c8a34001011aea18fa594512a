@@ -1,0 +1,142 @@
+package com.abhi.it.runner;
+
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+import com.abhi.it.Entity.Customer_Info;
+import com.abhi.it.Service.Servicerepo;
+
+@Component
+public class DataInsert implements ApplicationRunner{
+
+	@Autowired
+	private Servicerepo repo;
+	
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		// TODO Auto-generated method stub
+		repo.deleteAll();
+		
+		Customer_Info c = new Customer_Info();
+		c.setCustomer_name("Abhinav");
+		c.setGender("Male");
+		c.setPlan_name("Cash");
+		c.setPlan_status("Approved");
+		c.setBenefit_amt(5000.00);
+		c.setStart_date(LocalDate.now());
+		c.setEnd_date(LocalDate.now().plusMonths(6));
+		
+		Customer_Info c1 = new Customer_Info();
+		c1.setCustomer_name("Abhi");
+		c1.setPlan_name("Cash");
+		c1.setPlan_status("Denied");
+		c1.setDenied_reason("Rental income");
+		c1.setGender("Male");
+		
+		Customer_Info c2 = new Customer_Info();
+		c2.setCustomer_name("Prachi");
+		c2.setGender("Fe-Male");
+		c2.setPlan_name("Cash");
+		c2.setPlan_status("terminated");
+		c2.setBenefit_amt(5000.00);
+		c2.setStart_date(LocalDate.now().minusMonths(3));
+		c2.setTeminated_date(LocalDate.now());
+		c2.setTerminate_reason("Govt job");
+		
+		Customer_Info c3 = new Customer_Info();
+		c3.setCustomer_name("Abhinav");
+		c3.setGender("Male");
+		c3.setPlan_name("Food");
+		c3.setPlan_status("Approved");
+		c3.setBenefit_amt(5000.00);
+		c3.setStart_date(LocalDate.now());
+		c3.setEnd_date(LocalDate.now().plusMonths(6));
+		
+		
+		Customer_Info c4 = new Customer_Info();
+		c4.setCustomer_name("Shubham");
+		c4.setGender("Male");
+		c4.setPlan_name("Food");
+		c4.setPlan_status("Approved");
+		c4.setBenefit_amt(10000.00);
+		c4.setStart_date(LocalDate.now());
+		c4.setEnd_date(LocalDate.now().plusMonths(6));
+		
+		Customer_Info c5 = new Customer_Info();
+		c5.setCustomer_name("Abhishek");
+		c5.setPlan_name("Food");
+		c5.setPlan_status("Denied");
+		c5.setDenied_reason("Diabetics Person");
+		c5.setGender("Male");
+		
+		Customer_Info c6 = new Customer_Info();
+		c6.setCustomer_name("Chhavi");
+		c6.setGender("Fe-Male");
+		c6.setPlan_name("Food");
+		c6.setPlan_status("terminated");
+		c6.setBenefit_amt(5000.00);
+		c6.setStart_date(LocalDate.now().minusMonths(3));
+		c6.setTeminated_date(LocalDate.now());
+		c6.setTerminate_reason("Less income");
+		
+		
+		Customer_Info c7 = new Customer_Info();
+		c7.setCustomer_name("Gaurish");
+		c7.setGender("Male");
+		c7.setPlan_name("Medical");
+		c7.setPlan_status("Approved");
+		c7.setBenefit_amt(300000.00);
+		c7.setStart_date(LocalDate.now());
+		c7.setEnd_date(LocalDate.now().plusMonths(6));
+		
+		Customer_Info c8 = new Customer_Info();
+		c8.setCustomer_name("Abhishek");
+		c8.setPlan_name("Medical");
+		c8.setPlan_status("Denied");
+		c8.setDenied_reason("Diabetics Person");
+		c8.setGender("Male");
+		
+		Customer_Info c9 = new Customer_Info();
+		c9.setCustomer_name("Shweta");
+		c9.setGender("Fe-Male");
+		c9.setPlan_name("Medical");
+		c9.setPlan_status("terminated");
+		c9.setBenefit_amt(5000.00);
+		c9.setStart_date(LocalDate.now().minusMonths(3));
+		c9.setTeminated_date(LocalDate.now());
+		c9.setTerminate_reason("Move to USA");
+		
+		Customer_Info c10 = new Customer_Info();
+		c10.setCustomer_name("Vijay");
+		c10.setGender("Male");
+		c10.setPlan_name("Employment");
+		c10.setPlan_status("Approved");
+		c10.setBenefit_amt(10000.00);
+		c10.setStart_date(LocalDate.now());
+		c10.setEnd_date(LocalDate.now().plusMonths(6));
+		
+		Customer_Info c11 = new Customer_Info();
+		c11.setCustomer_name("Nitin");
+		c11.setPlan_name("Employment");
+		c11.setPlan_status("Denied");
+		c11.setDenied_reason("IT Person");
+		c11.setGender("Male");
+		
+		Customer_Info c12 = new Customer_Info();
+		c12.setCustomer_name("Nancy");
+		c12.setGender("Fe-Male");
+		c12.setPlan_name("Employment");
+		c12.setPlan_status("terminated");
+		c12.setBenefit_amt(15000.00);
+		c12.setStart_date(LocalDate.now().minusMonths(3));
+		c12.setTeminated_date(LocalDate.now());
+		c12.setTerminate_reason("High income");
+		
+		
+	}
+
+}

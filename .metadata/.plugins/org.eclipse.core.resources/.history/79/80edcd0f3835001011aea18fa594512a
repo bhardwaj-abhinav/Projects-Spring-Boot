@@ -1,0 +1,18 @@
+package com.abhi.it.Service;
+
+import java.util.List;
+
+import com.abhi.it.Entity.CustomerResponse;
+import com.abhi.it.Entity.Customer_Info;
+
+public interface ReportService {
+	public List<String> getPlansName();
+	
+	public List<String> getPlansStatus();
+	
+	public List<Customer_Info> getSearch(CustomerResponse cr);
+	
+	public boolean exportExcel();
+	
+	public boolean exportGenerator();
+}

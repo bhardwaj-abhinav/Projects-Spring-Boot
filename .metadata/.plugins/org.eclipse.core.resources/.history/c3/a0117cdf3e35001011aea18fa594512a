@@ -1,0 +1,46 @@
+package com.abhi.it.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.service.annotation.GetExchange;
+
+import com.abhi.it.Entity.CustomerInfo;
+import com.abhi.it.Entity.CustomerResponse;
+import com.abhi.it.Service.ReportService;
+import com.abhi.it.Service.Servicerepo;
+
+@Controller
+public class ReportController {
+
+	@Autowired
+	private ReportService repo;
+	
+	@GetMapping("/")
+	public String getHomepage(Model model) {
+		init(model);
+		return "index" ;
+	}
+
+	private void init(Model model) {
+		CustomerResponse res = new CustomerResponse();
+		model.addAttribute("PlanInfo", res);
+		model.addAttribute("names", repo.getPlansName());
+		model.addAttribute("status", repo.getPlansStatus());
+	}
+	
+	@PostMapping("/search")
+	public String getData(CustomerResponse data, Model model) {
+		System.out.println(data);
+		init(model);
+		List<CustomerInfo> lists = repo.getSearch(data);
+		model.addAttribute("lists", lists);
+		return "index";
+	}
+}

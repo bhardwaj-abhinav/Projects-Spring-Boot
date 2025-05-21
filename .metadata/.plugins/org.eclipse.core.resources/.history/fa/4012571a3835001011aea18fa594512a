@@ -1,0 +1,52 @@
+package com.abhi.it.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.abhi.it.Entity.CustomerResponse;
+import com.abhi.it.Entity.Customer_Info;
+
+public class ReportServiceImpl implements ReportService{
+
+	@Autowired
+	private Servicerepo repo;
+	
+	@Override
+	public List<String> getPlansName() {
+		// TODO Auto-generated method stub
+		List<String> planNames = repo.getPlansNames();
+		
+		return planNames;
+	}
+
+	@Override
+	public List<String> getPlansStatus() {
+		// TODO Auto-generated method stub
+		
+		List<String> planStatus = repo.getPlansStatus();
+		
+		return planStatus;
+	}
+
+	@Override
+	public List<Customer_Info> getSearch(CustomerResponse cr) {
+		// TODO Auto-generated method stub
+		List<Customer_Info> customers = repo.findAll();
+		return customers;
+	}
+
+	@Override
+	public boolean exportExcel() {
+		// TODO Auto-generated method stub
+		
+		return false;
+	}
+
+	@Override
+	public boolean exportGenerator() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

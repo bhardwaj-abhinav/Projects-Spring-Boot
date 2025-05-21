@@ -1,0 +1,15 @@
+package com.abhi.it.Entity;
+
+import java.time.LocalDate;
+
+import lombok.Data;
+
+@Data
+public class CustomerResponse {
+	private Integer customer_id;
+	private String plan_name;
+	private String plan_status;
+	private String gender;
+	private LocalDate start_date;
+	private LocalDate end_date;
+}

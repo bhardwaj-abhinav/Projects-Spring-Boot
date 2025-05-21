@@ -20,5 +20,5 @@ public interface ReportService {
 	
 	public boolean exportExcel(HttpServletResponse response) throws IOException;
 	
-	public boolean exportGenerator();
+	public boolean exportPdf(HttpServletResponse response) throws IOException;
 }

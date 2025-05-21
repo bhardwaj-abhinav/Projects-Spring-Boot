@@ -1,0 +1,17 @@
+package com.abhi.it.Service;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.abhi.it.Entity.Customer_Info;
+
+public interface Servicerepo extends JpaRepository<Customer_Info, Integer>{
+
+	@Query("select distinct(planname) from Customer_info")
+	public List<String> getPlansNames();
+	
+	@Query("select distinct(planstatus) from Customer_info")
+    public List<String> getPlansStatus();
+}

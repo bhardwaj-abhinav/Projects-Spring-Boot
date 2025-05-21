@@ -61,5 +61,14 @@ public class ReportController {
 	         
 	          
 	    }
+	  
+	  @GetMapping("/pdf")
+	  public void exportPdf(HttpServletResponse response) throws IOException {
+		  response.setContentType("application/pdf");
+	      String headerKey = "Content-Disposition";
+	        String headerValue = "attachment; filename=customer.pdf";
+	        response.setHeader(headerKey, headerValue);
+	        repo.exportPdf(response);
+	  }
 	
 }

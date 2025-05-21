@@ -1,0 +1,40 @@
+package com.abhi.it.Service;
+
+import java.util.List;
+
+import com.abhi.it.Entity.CustomerResponse;
+import com.abhi.it.Entity.Customer_Info;
+
+public class ReportServiceImpl implements ReportService{
+
+	@Override
+	public List<String> getPlansName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getPlansStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Customer_Info> getSearch(CustomerResponse cr) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean exportExcel() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean exportGenerator() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

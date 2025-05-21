@@ -1,0 +1,9 @@
+package com.abhi.it.Service;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.abhi.it.Entity.Customer_Info;
+
+public interface Servicerepo extends JpaRepository<Customer_Info, Integer>{
+
+}

@@ -1,0 +1,26 @@
+package com.abhi.it.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.service.annotation.GetExchange;
+
+import com.abhi.it.Entity.CustomerResponse;
+import com.abhi.it.Service.Servicerepo;
+
+@Controller
+public class ReportController {
+
+	@Autowired
+	private Servicerepo repo;
+	
+	@GetMapping("/")
+	public String getHomepage(Model model) {
+		CustomerResponse res = new CustomerResponse();
+		model.addAttribute("PlanInfo", res);
+		model.addAttribute("names", repo.getPlansNames());
+		model.addAttribute("status", repo.getPlansStatus());
+		return "index" ;
+	}
+}

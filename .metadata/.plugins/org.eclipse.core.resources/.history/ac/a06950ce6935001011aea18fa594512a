@@ -1,0 +1,109 @@
+package com.abhi.it.util;
+
+import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.abhi.it.Entity.CustomerInfo;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class Excelgenerator {
+	
+	private XSSFWorkbook workbook;
+	private XSSFSheet sheet;
+	private List<CustomerInfo> lists;
+	
+	public Excelgenerator(List<CustomerInfo> lists) {
+		this.lists = lists;
+		this.workbook = new XSSFWorkbook();
+	}
+	
+	public void writeHeaderLine() {
+		sheet = workbook.createSheet("CustomerInfo");
+		Row row = sheet.createRow(0);
+		
+		CellStyle style = workbook.createCellStyle();
+		XSSFFont font = workbook.createFont();
+		font.setBold(true);
+		font.setFontHeight(16);
+		style.setFont(font);
+		
+		createCell(row, 0, "S.No", style);
+		createCell(row, 1, "Customer Name", style);
+		createCell(row, 2, "Plan Name", style);
+		createCell(row, 3, "Plan Status", style);
+		createCell(row, 4, "Gender", style);
+		createCell(row, 5, "Start Date", style);
+		createCell(row, 6, "End Date", style);
+		createCell(row, 8, "Denied Reason", style);
+		createCell(row, 9, "Terminated Reason", style);
+		createCell(row, 10, "Terminated date", style);
+		createCell(row, 11, "Benefit Name", style);
+	}
+	
+	public void createCell(Row row,int columnCount, Object value, CellStyle style) {
+		sheet.autoSizeColumn(columnCount);
+		Cell cell = row.createCell(columnCount);
+		if (value instanceof Integer) {
+            cell.setCellValue((Integer) value);
+        } else if (value instanceof Boolean) {
+            cell.setCellValue((Boolean) value);
+        }else if(value instanceof LocalDate) {
+        	cell.setCellValue((Date) value);
+        }else if(value instanceof Double){
+        	cell.setCellValue((Double) value);
+        }else {
+            cell.setCellValue((String) value);
+        }
+		cell.setCellStyle(style);
+	}
+	
+	public void writedataLine() {
+		   int rowCount = 1;
+		   
+	        CellStyle style = workbook.createCellStyle();
+	        XSSFFont font = workbook.createFont();
+	        font.setFontHeight(14);
+	        style.setFont(font);
+	        
+	        for (CustomerInfo c : lists) {
+	            Row row = sheet.createRow(rowCount++);
+	            int columnCount = 0;
+	             
+	            createCell(row, columnCount++, c.getCustomerId(), style);
+	            createCell(row, columnCount++, c.getCustomerName(), style);
+	            createCell(row, columnCount++, c.getPlanName(), style);
+	            createCell(row, columnCount++, c.getPlanStatus().toString(), style);
+	            createCell(row, columnCount++, c.getGender(), style);
+	            createCell(row, columnCount++, c.getStartDate(), style);
+	            createCell(row, columnCount++, c.getEndDate(), style);
+	            createCell(row, columnCount++, c.getDeniedReason(), style);
+	            createCell(row, columnCount++, c.getTerminateReason(), style);
+	            createCell(row, columnCount++, c.getTeminatedDate(), style);
+	            createCell(row, columnCount++, c.getBenefitAmt(), style);
+	             
+	        }
+	}
+	   public void export(HttpServletResponse response) throws IOException {
+	        writeHeaderLine();
+	        writedataLine();
+	         
+	        ServletOutputStream outputStream = response.getOutputStream();
+	        workbook.write(outputStream);
+	        workbook.close();
+	         
+	        outputStream.close();
+	         
+	    }
+	
+}
