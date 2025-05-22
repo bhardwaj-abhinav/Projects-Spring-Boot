@@ -1,6 +1,7 @@
 package com.abhi.it.Service;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.abhi.it.Entity.CustomerResponse;
+import com.abhi.it.util.EmailsUtil;
 import com.abhi.it.util.Excelgenerator;
+import com.abhi.it.util.pdfGenerator;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
@@ -23,6 +26,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.abhi.it.Entity.CustomerInfo;
@@ -32,6 +36,12 @@ public class ReportServiceImpl implements ReportService{
 
 	@Autowired
 	private Servicerepo repo;
+	
+	@Autowired
+	private pdfGenerator pdfGenerator;
+	
+	@Autowired
+	private EmailsUtil utils;
 	
 	@Override
 	public List<String> getPlansName() {
@@ -86,55 +96,33 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public boolean exportExcel(HttpServletResponse response) throws IOException{
+	public boolean exportExcel(HttpServletResponse response) throws IOException, MessagingException{
 		// TODO Auto-generated method stub
 		 List<CustomerInfo> customers = repo.findAll();
-         
+         File f = new File("Customers.xls");
 	     Excelgenerator excel = new Excelgenerator(customers);
-	     excel.export(response);
+	     excel.export(response, f);
+	     
+	     String subject = "Customer Data";
+	     String body = "<h1>Customer plan is attached</h1>";
+	     String to = "abhinavbhardwaj898@gmail.com";
+	     utils.sendMail(subject, body, to, f);
+	     f.delete();
 		
 		return true;
 	}
 
-	public boolean exportPdf(HttpServletResponse response) throws IOException {
+	public boolean exportPdf(HttpServletResponse response) throws IOException, MessagingException {
 		// TODO Auto-generated method stub
 		
 		List<CustomerInfo> customers = repo.findAll();
-		
-		Document document = new Document(PageSize.A4);
-		
-		PdfWriter.getInstance(document, response.getOutputStream());
-		document.open();
-		 Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-	        font.setSize(18);
-	        font.setColor(Color.BLUE);
-		
-		Paragraph p = new Paragraph("Customer Data", font);
-		p.setAlignment(p.ALIGN_CENTER);
-		document.add(p);
-		
-		PdfPTable table = new PdfPTable(6);
-		table.setSpacingBefore(5);
-		
-		table.addCell("ID");
-		table.addCell("Customer-Name");
-		table.addCell("Plan Name");
-		table.addCell("Plan Status");
-		table.addCell("Start Date");
-		table.addCell("End Date");
-		
-		for(CustomerInfo customer : customers) {
-			table.addCell(String.valueOf(customer.getCustomerId()));
-			table.addCell(customer.getCustomerName());
-			table.addCell(customer.getPlanStatus());
-			table.addCell(customer.getStartDate() + "");
-			table.addCell(customer.getEndDate() + "");
-		}
-		
-		document.add(table);
-		document.close();
-		
-		
+		File f = new File("Customers.pdf");
+		pdfGenerator.pgfGen(customers, response, f);
+		 String subject = "Customer Data";
+	     String body = "<h1>Customer plan is attached</h1>";
+	     String to = "abhinavbhardwaj898@gmail.com";
+	     utils.sendMail(subject, body, to, f);
+		f.delete();	
 		return true;
 	}
 

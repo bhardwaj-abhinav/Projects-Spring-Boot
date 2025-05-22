@@ -1,5 +1,7 @@
 package com.abhi.it.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -94,12 +96,14 @@ public class Excelgenerator {
 	             
 	        }
 	}
-	   public void export(HttpServletResponse response) throws IOException {
+	   public void export(HttpServletResponse response, File f) throws IOException {
 	        writeHeaderLine();
 	        writedataLine();
 	         
 	        ServletOutputStream outputStream = response.getOutputStream();
 	        workbook.write(outputStream);
+	        FileOutputStream fileOotput = new FileOutputStream(f);
+	        workbook.write(fileOotput);
 	        workbook.close();
 	         
 	        outputStream.close();

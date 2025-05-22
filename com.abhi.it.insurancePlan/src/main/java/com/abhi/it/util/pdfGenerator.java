@@ -1,5 +1,65 @@
 package com.abhi.it.util;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import com.abhi.it.Entity.CustomerInfo;
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+
+import jakarta.servlet.http.HttpServletResponse;
+
+@Component
 public class pdfGenerator {
 
+	public boolean pgfGen(List<CustomerInfo> customers, HttpServletResponse response, File f) throws IOException{
+		
+		Document document = new Document(PageSize.A4);
+		
+		PdfWriter.getInstance(document, response.getOutputStream());
+		PdfWriter.getInstance(document, new FileOutputStream(f));
+		document.open();
+		 Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+	        font.setSize(18);
+	        font.setColor(Color.BLUE);
+		
+		Paragraph p = new Paragraph("Customer Data", font);
+		p.setAlignment(p.ALIGN_CENTER);
+		document.add(p);
+		
+		PdfPTable table = new PdfPTable(6);
+		table.setSpacingBefore(5);
+		
+		table.addCell("ID");
+		table.addCell("Customer-Name");
+		table.addCell("Plan Name");
+		table.addCell("Plan Status");
+		table.addCell("Start Date");
+		table.addCell("End Date");
+		
+		for(CustomerInfo customer : customers) {
+			table.addCell(String.valueOf(customer.getCustomerId()));
+			table.addCell(customer.getCustomerName());
+			table.addCell(customer.getPlanStatus());
+			table.addCell(customer.getStartDate() + "");
+			table.addCell(customer.getEndDate() + "");
+		}
+		
+		document.add(table);
+		document.close();
+		
+
+		
+		return true;
+	}
 }

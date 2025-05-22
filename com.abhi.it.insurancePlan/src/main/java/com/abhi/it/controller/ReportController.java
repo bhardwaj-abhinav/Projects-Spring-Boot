@@ -17,6 +17,7 @@ import com.abhi.it.Entity.CustomerInfo;
 import com.abhi.it.Entity.CustomerResponse;
 import com.abhi.it.Service.ReportService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -48,7 +49,7 @@ public class ReportController {
 	}
 	
 	  @GetMapping("/excel")
-	    public void exportToExcel(HttpServletResponse response) throws IOException {
+	    public void exportToExcel(HttpServletResponse response) throws IOException, MessagingException {
 	        response.setContentType("application/octet-stream");
 	        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 	        String currentDateTime = dateFormatter.format(new Date());
@@ -63,7 +64,7 @@ public class ReportController {
 	    }
 	  
 	  @GetMapping("/pdf")
-	  public void exportPdf(HttpServletResponse response) throws IOException {
+	  public void exportPdf(HttpServletResponse response) throws IOException, MessagingException {
 		  response.setContentType("application/pdf");
 	      String headerKey = "Content-Disposition";
 	        String headerValue = "attachment; filename=customer.pdf";

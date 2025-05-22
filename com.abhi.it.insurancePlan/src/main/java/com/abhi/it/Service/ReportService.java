@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.abhi.it.Entity.CustomerResponse;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.abhi.it.Entity.CustomerInfo;
@@ -18,7 +19,7 @@ public interface ReportService {
 	
 	public List<CustomerInfo> getSearch(CustomerResponse cr);
 	
-	public boolean exportExcel(HttpServletResponse response) throws IOException;
+	public boolean exportExcel(HttpServletResponse response) throws IOException, MessagingException;
 	
-	public boolean exportPdf(HttpServletResponse response) throws IOException;
+	public boolean exportPdf(HttpServletResponse response) throws IOException, MessagingException;
 }
